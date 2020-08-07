@@ -1,8 +1,6 @@
 const express = require('express');
 const app = express();
-
 const path = require('path');
-const members = require('./Members.js');
 const logger = require('./middleware/logger.js')
 
 
@@ -16,20 +14,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));       // this is similar to below static folder
 });
 
-
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-// Gets All Members Through API and using postman
-app.get('/api/members', (req, res) => res.json(members))
-
-
-// Get Single Member
-app.get('/api/members/:name', (req, res) => {
-    // res.send(req.params.id);            // we can get any parameter from api eg. name, id, email or status
-    res.json(members.filter(member => member.name === req.params.name));     // parseInt is used to convert the data into integer
-});
+// Members API Routes
+app.use('/api/members', require('./routes/api/members'))
 
 
 const PORT = process.env.PORT || 5000;
