@@ -8,6 +8,11 @@ const logger = require('./middleware/logger.js')
 app.use(logger);             // execute file & fresh api
 
 
+// Body Parse Middleware (for post method in members.js file)
+app.use(express.json());                 // handles json
+app.use(express.urlencoded({ extended : false }));     // handles file submission
+
+
 // GET Method
 app.get('/', (req, res) => { 
     res.send(`<h1>Hello World!!</h1> <p>Hello.. Welcome to my Page!!</p>`);       // using multiple response send file (Error: can't send headers)
